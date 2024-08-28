@@ -1,0 +1,29 @@
+.MensFeshionStyle{
+    background-image: url("../../assets/mensFeshion.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    /* background-color: rgb(75, 75, 75); */
+}
+
+.MensFeshionStyle:hover{
+    filter: brightness(60%);
+    transform: scale(1.01);
+    transition: transform 0.5s ease;
+    opacity: 0.9;
+}
+
+.WomensFeshionStyle{
+    background-image: url("../../assets/WomensFeshion.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 400px;
+  
+}
+.WomensFeshionStyle:hover{
+    filter: brightness(60%);
+    transform: scale(1.01);
+    transition: transform 0.5s ease;
+    opacity: 0.9;
+}

@@ -1,0 +1,14 @@
+.midSectionContainerWelcomePage{
+    background-image: url("../../assets/heroImage1.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 120vh;
+    width: 100%;
+     background-position-y: top;
+    
+}
+.fontColor{
+    color:#4e70ff;
+}
+ 
