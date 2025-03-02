@@ -12,13 +12,30 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "../ui/navigation-menu";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import img from "../../assets/logo1.png";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 import SearchIcon from "@mui/icons-material/Search";
-import Avatar from "@mui/material/Avatar";
-function navBar({ config }) {
+// import Avatar from "@mui/material/Avatar";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "../ui/avatar"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu"
+import {
+  LogOut,
+} from "lucide-react"
+function navBar({ config }: any) {
+  const navigate = useNavigate();
   const menComponents: { title: string; href: string; description: string }[] =
     [
       {
@@ -51,30 +68,34 @@ function navBar({ config }) {
     href: string;
     description: string;
   }[] = [
-    {
-      title: "Clothing",
-      href: "/docs/primitives/alert-dialog",
-      description:
-        "A modal dialog that interrupts the user with important content and expects a response.",
-    },
-    {
-      title: "Footwear",
-      href: "/docs/primitives/hover-card",
-      description:
-        "For sighted users to preview content available behind a link.",
-    },
-    {
-      title: "Watches",
-      href: "/docs/primitives/progress",
-      description:
-        "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
-    },
-    {
-      title: "Fragrance for Men",
-      href: "/docs/primitives/scroll-area",
-      description: "Visually or semantically separates content.",
-    },
-  ];
+      {
+        title: "Clothing",
+        href: "/docs/primitives/alert-dialog",
+        description:
+          "A modal dialog that interrupts the user with important content and expects a response.",
+      },
+      {
+        title: "Footwear",
+        href: "/docs/primitives/hover-card",
+        description:
+          "For sighted users to preview content available behind a link.",
+      },
+      {
+        title: "Watches",
+        href: "/docs/primitives/progress",
+        description:
+          "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
+      },
+      {
+        title: "Fragrance for Men",
+        href: "/docs/primitives/scroll-area",
+        description: "Visually or semantically separates content.",
+      },
+    ];
+  const handleLogout = async () => {
+    localStorage.clear();
+    navigate("/")
+  }
   return (
     <div
       className="bg-black h-20  "
@@ -201,12 +222,41 @@ function navBar({ config }) {
         />
       </div>
 
-      <div style={{display:"flex",flexDirection:"row",gap:20}}>
+      <div style={{ display: "flex", flexDirection: "row", gap: 20 }}>
         <button>
           <ShoppingCartIcon style={{ color: "white" }} />
         </button>
 
-        <Avatar src="/broken-image.jpg" />
+        {/* <Avatar src="/broken-image.jpg" /> */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Avatar>
+              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent
+            className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+            align="end"
+            sideOffset={4}
+          >
+            <DropdownMenuLabel className="p-0 font-normal">
+              <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+                <Avatar className="h-8 w-8 rounded-lg">
+                  <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                </Avatar>
+              </div>
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={handleLogout}>
+              <LogOut />
+              Log out
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
       </div>
     </div>
   );

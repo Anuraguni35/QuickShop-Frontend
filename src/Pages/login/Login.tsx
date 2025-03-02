@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import img from "../../assets/logo1.png";
-import Input from "../../Components/component/Input";
+// import Input from "../../Components/component/Input";
 import TextField from "@mui/material/TextField";
 import { Alert, AlertDescription, AlertTitle } from "../../Components/ui/alert";
 import {
@@ -55,7 +55,7 @@ function Login() {
         email: userDetails.email,
         password: userDetails.password,
       });
-
+      console.log(res, 'response from login');
       if (res.status === 200) {
         console.log(res.data);
         localStorage.setItem("token", res.data.tokens.token);
@@ -85,7 +85,7 @@ function Login() {
           });
         }, 3000);
       }
-    } catch (err) {
+    } catch (err: any) {
       setAlert({
         Visibility: true,
         message: err.response.data.message,
