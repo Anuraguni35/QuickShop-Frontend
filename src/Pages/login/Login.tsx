@@ -22,6 +22,7 @@ import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
 import { cn } from "@/lib/utils"
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
+import { toast } from "sonner";
 function Login({
   className,
   ...props
@@ -58,8 +59,6 @@ function Login({
     e.preventDefault()
     try {
       // setIsLoading(true);
-      console.log(userDetails, "check user")
-      console.log(!handleValidations(), 'response from validation');
       if (!handleValidations()) {
         return;
       }
@@ -75,6 +74,9 @@ function Login({
         localStorage.setItem("email", res.data.user.email);
         localStorage.setItem("name", res.data.user.name);
         localStorage.setItem("role", res.data.user.role);
+        toast("Login successfully!!!", {
+          description: "Now you can explore QuickShop",
+        })
         setAlert({
           Visibility: true,
           message: "User Login successfully now you can explore QuickShop",
@@ -99,6 +101,10 @@ function Login({
         }, 3000);
       }
     } catch (err: any) {
+      toast("Login failed.", {
+        description: err.response.data.message || "Something went wrong!",
+        className: "bg-red-600 text-white border-red-700",
+      })
       setAlert({
         Visibility: true,
         message: err.response.data.message,
@@ -131,6 +137,10 @@ function Login({
     }));
 
     if (userDetails.email.trim() === "") {
+      toast("Login failed.", {
+        description: "Email is required",
+        className: "bg-red-600 text-white border-red-700",
+      })
       setValidation((prevState: any) => ({
         ...prevState,
         email: "Email is required",
@@ -140,6 +150,10 @@ function Login({
     } else if (
       !/^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/.test(userDetails.email)
     ) {
+      toast("Login failed.", {
+        description: "Invalid email address",
+        className: "bg-red-600 text-white border-red-700",
+      })
       setValidation((prevState: any) => ({
         ...prevState,
         email: "Invalid email address",
@@ -149,6 +163,10 @@ function Login({
     }
 
     if (userDetails.password.trim() === "") {
+      toast("Login failed.", {
+        description: "Password is required",
+        className: "bg-red-600 text-white border-red-700",
+      })
       setValidation((prevState: any) => ({
         ...prevState,
         password: "Password is required",
@@ -157,6 +175,10 @@ function Login({
       return isValid;
     }
     if (userDetails.password.trim() !== userDetails.confirmPassword.trim()) {
+      toast("Login failed.", {
+        description: "Passwords and confirm password do not match",
+        className: "bg-red-600 text-white border-red-700",
+      })
       setValidation((prevState: any) => ({
         ...prevState,
         confirmPassword: "Passwords and confirm password do not match",
@@ -526,7 +548,8 @@ function Login({
                 }
               />
             </div>
-            <Button type="submit" className="w-full">
+            <Button type="submit" className="w-full"
+            >
               Login
             </Button>
             <div className="text-center text-sm">

@@ -22,6 +22,7 @@ import { Button } from "@/Components/ui/button";
 import { cn } from "@/lib/utils"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/Components/ui/select";
 import { Card, CardContent } from "@/Components/ui/card";
+import { toast } from "sonner";
 
 function SignUp({
   className,
@@ -58,7 +59,7 @@ function SignUp({
   });
 
   const handleSignUp = async (e: any) => {
-    e.preventDefault()
+    e.preventDefault();
     setIsLoading(true);
     try {
       if (!handleValidations()) {
@@ -72,6 +73,9 @@ function SignUp({
       });
 
       if (res.status === 201) {
+        toast("Signup successfully!!!", {
+          description: "Now you can login in QuickShop.",
+        })
         setAlert({
           Visibility: true,
           message: "User registered successfully now you can go to login page and login again",
@@ -93,6 +97,10 @@ function SignUp({
 
       // const response=await axios.post(`${ipConfig}/auth/register`,userDetails)
     } catch (err: any) {
+      toast("Signup failed.", {
+        description: err.response.data.message || "Something went wrong!",
+        className: "bg-red-600 text-black border-red-700",
+      })
       console.log(err, "Error from Signup");
       setAlert({
         Visibility: true,
@@ -127,6 +135,10 @@ function SignUp({
     }));
 
     if (userDetails.name.trim() === "") {
+      toast("Signup failed.", {
+        description: "Name is required",
+        className: "bg-red-600 text-white border-red-700",
+      })
       setValidation((prevState) => ({
         ...prevState,
         name: "Name is required",
@@ -135,6 +147,10 @@ function SignUp({
       return isValid;
     }
     if (userDetails.email.trim() === "") {
+      toast("Signup failed.", {
+        description: "Email is required.",
+        className: "bg-red-600 text-white border-red-700",
+      });
       setValidation((prevState) => ({
         ...prevState,
         email: "Email is required",
@@ -144,6 +160,10 @@ function SignUp({
     } else if (
       !/^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/.test(userDetails.email)
     ) {
+      toast("Signup failed.", {
+        description: "Invalid email address",
+        className: "bg-red-600 text-white border-red-700",
+      });
       setValidation((prevState) => ({
         ...prevState,
         email: "Invalid email address",
@@ -152,6 +172,10 @@ function SignUp({
       return isValid;
     }
     if (userDetails.role.trim() === "") {
+      toast("Signup failed.", {
+        description: "Role is required",
+        className: "bg-red-600 text-white border-red-700",
+      });
       setValidation((prevState) => ({
         ...prevState,
         role: "Role is required",
@@ -160,6 +184,10 @@ function SignUp({
       return isValid;
     }
     if (userDetails.password.trim() === "") {
+      toast("Signup failed.", {
+        description: "Password is required",
+        className: "bg-red-600 text-white border-red-700",
+      });
       setValidation((prevState) => ({
         ...prevState,
         password: "Password is required",
@@ -168,6 +196,10 @@ function SignUp({
       return isValid;
     }
     if (userDetails.password.trim() !== userDetails.confirmPassword.trim()) {
+      toast("Signup failed.", {
+        description: "Passwords and confirm password do not match",
+        className: "bg-red-600 text-white border-red-700",
+      });
       setValidation((prevState) => ({
         ...prevState,
         confirmPassword: "Passwords and confirm password do not match",
